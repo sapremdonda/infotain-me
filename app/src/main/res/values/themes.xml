@@ -1,7 +1,9 @@
 <resources>
-    <style name="Theme.Infotain" parent="android:Theme.Material.NoActionBar.Fullscreen">
-        <item name="android:windowBackground">@color/bg</item>
-        <item name="android:statusBarColor">@color/bg</item>
-        <item name="android:navigationBarColor">@color/bg</item>
+    <style name="Theme.Infotain" parent="android:Theme.Material.Light.NoActionBar">
+        <item name="android:colorAccent">#007AFF</item>
+        <item name="android:windowBackground">@color/settings_bg</item>
+        <item name="android:statusBarColor">@color/settings_bg</item>
+        <item name="android:navigationBarColor">@color/settings_bg</item>
+        <item name="android:windowLightStatusBar">true</item>
     </style>
 </resources>
