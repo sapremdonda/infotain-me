@@ -1,8 +1,8 @@
 # Infotain Me
 
 A personal Android Auto dashboard. Open it on the car screen to see the time, weather, a
-month calendar, your phone's notifications and its battery, memory and storage, on a smooth
-gradient wallpaper. Sideloaded only, never published to the Play Store.
+month calendar, your phone's notifications and its battery, memory and storage, on liquid-glass
+cards over a smooth gradient wallpaper. Sideloaded only, never published to the Play Store.
 
 | Headlights off | Headlights on |
 | --- | --- |
@@ -24,6 +24,9 @@ gradient wallpaper. Sideloaded only, never published to the Play Store.
 | Temperature | Automatic (from your region), °C, °F |
 | Location | Needed for weather |
 | Notification access | Needed to show notifications on the car screen |
+
+The cards use a liquid-glass look: each shows a blurred, slightly magnified copy of the
+wallpaper behind it, with a tint, a sheen across the top and a bright rim.
 
 The app registers with Android Auto as a navigation app, which gives it a blank canvas to draw
 on. Google wouldn't allow that on the Play Store, but it's fine for a sideloaded personal app.
@@ -54,6 +57,21 @@ Every push to `main` builds the APK and publishes a release:
 3. Open **Infotain Me** on the phone:
    - Allow location when asked.
    - Tap **Turn on notification access**.
+
+### If Google Play Protect blocks the install
+
+Play Protect warns about any APK from a developer it doesn't know. This is your own app, so:
+
+1. On the warning, tap **More details** (or the small arrow), then **Install anyway**.
+2. If there's no such option, turn Play Protect off for a moment: open the **Play Store**, tap
+   your profile picture, then **Play Protect**, then the ⚙ gear. Turn off
+   **Scan apps with Play Protect**, install the APK, then turn it back on.
+3. If you're asked to send the app for scanning, either answer is fine.
+
+Another option is installing from a computer with USB debugging, which skips the prompt:
+`adb install -r infotain-me-0.1.N.apk`.
+
+### Notification access
 
 On Android 13 and later, the notification access switch may be greyed out for apps installed
 from an APK. Open **App info** for Infotain Me, tap **⋮**, choose **Allow restricted settings**,

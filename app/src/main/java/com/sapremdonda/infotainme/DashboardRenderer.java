@@ -4,7 +4,6 @@ import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapShader;
 import android.graphics.Canvas;
-import android.graphics.LinearGradient;
 import android.graphics.Matrix;
 import android.graphics.Paint;
 import android.graphics.Rect;
@@ -32,19 +31,13 @@ public final class DashboardRenderer {
 
     private final Fonts fonts;
     private final WeatherIcons weatherIcons = new WeatherIcons();
+    private final LiquidGlass glass = new LiquidGlass();
     private final Paint fill = new Paint(Paint.ANTI_ALIAS_FLAG);
     private final Paint stroke = new Paint(Paint.ANTI_ALIAS_FLAG);
-    private final Paint wallpaperPaint = new Paint();
     private final Paint iconPaint = new Paint(Paint.ANTI_ALIAS_FLAG | Paint.FILTER_BITMAP_FLAG);
     private final TextPaint text = new TextPaint(Paint.ANTI_ALIAS_FLAG);
     private final Calendar cal = Calendar.getInstance();
     private final Matrix matrix = new Matrix();
-
-    // Wallpaper gradient is rebuilt only when something changes.
-    private Shader wallShader;
-    private int wallW;
-    private int wallH;
-    private int[] wallColors;
 
     // Per-frame values.
     private Palette pal;
@@ -57,14 +50,13 @@ public final class DashboardRenderer {
         fonts = Fonts.get(context);
         stroke.setStyle(Paint.Style.STROKE);
         stroke.setStrokeCap(Paint.Cap.ROUND);
-        wallpaperPaint.setDither(true);
     }
 
     /** Draws the wallpaper over the whole canvas and the cards inside {@code area}. */
     public void draw(Canvas c, Rect area, DashboardState s) {
         pal = s.dark ? Palette.DARK : Palette.LIGHT;
         cal.setTimeInMillis(s.now);
-        drawWallpaper(c, s.wallpaper.colors(s.dark));
+        glass.drawWallpaper(c, s.wallpaper.colors(s.dark));
 
         float w = area.width();
         float h = area.height();
@@ -119,29 +111,8 @@ public final class DashboardRenderer {
 
     // ------------------------------------------------------------ background
 
-    private void drawWallpaper(Canvas c, int[] colors) {
-        int cw = c.getWidth();
-        int ch = c.getHeight();
-        if (wallShader == null || cw != wallW || ch != wallH || colors != wallColors) {
-            wallShader = new LinearGradient(0, 0, cw, ch, colors, null, Shader.TileMode.CLAMP);
-            wallW = cw;
-            wallH = ch;
-            wallColors = colors;
-        }
-        wallpaperPaint.setShader(wallShader);
-        c.drawRect(0, 0, cw, ch, wallpaperPaint);
-    }
-
     private void drawCard(Canvas c, RectF r) {
-        fill.setColor(pal.card);
-        if (pal.cardShadow != 0) {
-            fill.setShadowLayer(u * 0.025f, 0f, u * 0.006f, pal.cardShadow);
-        }
-        c.drawRoundRect(r, radius, radius, fill);
-        fill.clearShadowLayer();
-        stroke.setColor(pal.cardEdge);
-        stroke.setStrokeWidth(Math.max(1f, u * 0.002f));
-        c.drawRoundRect(r, radius, radius, stroke);
+        glass.drawCard(c, r, radius, u, pal);
     }
 
     /** Draws a card's small heading and returns the y where content can start. */
