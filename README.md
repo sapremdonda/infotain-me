@@ -22,11 +22,13 @@ Both screens use the same drawing code in
 
 ## Get the APK
 
-Every push to `main` builds the APK on GitHub:
+Every push to `main` builds the APK on GitHub and publishes it as a release:
 
-1. Open the repo's **Actions** tab, then the latest **Build APK** run.
-2. Under **Artifacts**, download `infotain-me-apk` (a zip) and unzip it.
-3. Copy the `.apk` to your phone and open it. Allow installing from unknown apps if asked.
+1. Open the repo's **Releases** page (on your phone, logged in to GitHub).
+2. Under **Assets** in the latest release, download `infotain-me-0.1.N.apk`.
+3. Open it and allow installing from unknown apps if asked.
+
+The APK is also attached to each run in the **Actions** tab (as a zip under **Artifacts**).
 
 Every build is signed with the same key (`keystore/debug.keystore`), so newer APKs install over
 older ones without uninstalling first.

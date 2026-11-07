@@ -6,12 +6,15 @@ android {
     namespace 'com.sapremdonda.infotainme'
     compileSdk 36
 
+    // CI build number, so each build is a newer version than the last.
+    def buildNumber = (System.getenv('GITHUB_RUN_NUMBER') ?: '0').toInteger()
+
     defaultConfig {
         applicationId 'com.sapremdonda.infotainme'
         minSdk 26
         targetSdk 36
-        versionCode 1
-        versionName '0.1.0'
+        versionCode Math.max(1, buildNumber)
+        versionName "0.1.${buildNumber}"
     }
 
     // Personal sideloaded app: every build is signed with the same key in the repo,
